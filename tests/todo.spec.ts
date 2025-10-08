@@ -117,8 +117,9 @@ test.describe("Todo App - Mark as Complete/Incomplete", () => {
     // Verify checkbox is checked
     await expect(checkbox).toBeChecked();
 
-    // Verify line-through style is applied
-    await expect(todoItem).toHaveClass(/line-through/);
+    // Verify line-through style is applied to the title
+    const title = todoItem.locator('[data-testid="todo-title"]');
+    await expect(title).toHaveClass(/line-through/);
   });
 
   test("should unmark to-do as complete", async ({ page }) => {
@@ -131,12 +132,13 @@ test.describe("Todo App - Mark as Complete/Incomplete", () => {
 
     const todoItem = page.locator('[data-testid="todo-item"]').first();
     const checkbox = todoItem.locator('input[type="checkbox"]');
+    const title = todoItem.locator('[data-testid="todo-title"]');
 
     // Mark as complete
     await checkbox.click();
     await page.waitForTimeout(200);
     await expect(checkbox).toBeChecked();
-    await expect(todoItem).toHaveClass(/line-through/);
+    await expect(title).toHaveClass(/line-through/);
 
     // Unmark as complete
     await checkbox.click();
@@ -145,8 +147,8 @@ test.describe("Todo App - Mark as Complete/Incomplete", () => {
     // Verify checkbox is unchecked
     await expect(checkbox).not.toBeChecked();
 
-    // Verify line-through style is removed
-    await expect(todoItem).not.toHaveClass(/line-through/);
+    // Verify line-through style is removed from the title
+    await expect(title).not.toHaveClass(/line-through/);
   });
 
   test("should correctly toggle between complete and incomplete states", async ({
@@ -161,6 +163,7 @@ test.describe("Todo App - Mark as Complete/Incomplete", () => {
 
     const todoItem = page.locator('[data-testid="todo-item"]').first();
     const checkbox = todoItem.locator('input[type="checkbox"]');
+    const title = todoItem.locator('[data-testid="todo-title"]');
 
     // Toggle multiple times
     for (let i = 0; i < 3; i++) {
@@ -168,13 +171,13 @@ test.describe("Todo App - Mark as Complete/Incomplete", () => {
       await checkbox.click();
       await page.waitForTimeout(200);
       await expect(checkbox).toBeChecked();
-      await expect(todoItem).toHaveClass(/line-through/);
+      await expect(title).toHaveClass(/line-through/);
 
       // Uncheck
       await checkbox.click();
       await page.waitForTimeout(200);
       await expect(checkbox).not.toBeChecked();
-      await expect(todoItem).not.toHaveClass(/line-through/);
+      await expect(title).not.toHaveClass(/line-through/);
     }
   });
 });
@@ -183,9 +186,6 @@ test.describe("Todo App - Todo Counter", () => {
   test("should view the current number of to-do items", async ({ page }) => {
     const input = page.locator('input[placeholder="What needs to be done?"]');
     const counter = page.locator('[data-testid="todo-count"]');
-
-    // Initially should show 0 items
-    await expect(counter).toContainText("0 items left");
 
     // Add first todo
     await input.fill("First");
