@@ -11,13 +11,13 @@ test.beforeEach(async ({ page, request }) => {
   await page.goto(APP_URL);
 
   // Wait for the app to load
-  await page.waitForSelector('input[placeholder="What needs to be done?"]');
+  await page.waitForSelector('input[name="todo-input"]');
   await page.waitForTimeout(300);
 });
 
 test.describe("Todo App - Basic Functionality", () => {
   test("should add new to-do items", async ({ page }) => {
-    const input = page.locator('input[placeholder="What needs to be done?"]');
+    const input = page.locator('input[name="todo-input"]');
 
     // Add first todo
     await input.fill("Buy groceries");
@@ -46,7 +46,7 @@ test.describe("Todo App - Basic Functionality", () => {
   test("should clear the text input field when an item is added", async ({
     page,
   }) => {
-    const input = page.locator('input[placeholder="What needs to be done?"]');
+    const input = page.locator('input[name="todo-input"]');
 
     // Add a todo
     await input.fill("Clean the house");
@@ -66,7 +66,7 @@ test.describe("Todo App - Basic Functionality", () => {
   test("should append new to-dos to the bottom of the list", async ({
     page,
   }) => {
-    const input = page.locator('input[placeholder="What needs to be done?"]');
+    const input = page.locator('input[name="todo-input"]');
 
     // Add first todo
     await input.fill("First task");
@@ -96,7 +96,7 @@ test.describe("Todo App - Basic Functionality", () => {
 
 test.describe("Todo App - Mark as Complete/Incomplete", () => {
   test("should mark to-do as complete", async ({ page }) => {
-    const input = page.locator('input[placeholder="What needs to be done?"]');
+    const input = page.locator('input[name="todo-input"]');
 
     // Add a todo
     await input.fill("Task to complete");
@@ -123,7 +123,7 @@ test.describe("Todo App - Mark as Complete/Incomplete", () => {
   });
 
   test("should unmark to-do as complete", async ({ page }) => {
-    const input = page.locator('input[placeholder="What needs to be done?"]');
+    const input = page.locator('input[name="todo-input"]');
 
     // Add a todo
     await input.fill("Task to toggle");
@@ -154,7 +154,7 @@ test.describe("Todo App - Mark as Complete/Incomplete", () => {
   test("should correctly toggle between complete and incomplete states", async ({
     page,
   }) => {
-    const input = page.locator('input[placeholder="What needs to be done?"]');
+    const input = page.locator('input[name="todo-input"]');
 
     // Add a todo
     await input.fill("Toggle test");
@@ -184,7 +184,7 @@ test.describe("Todo App - Mark as Complete/Incomplete", () => {
 
 test.describe("Todo App - Todo Counter", () => {
   test("should view the current number of to-do items", async ({ page }) => {
-    const input = page.locator('input[placeholder="What needs to be done?"]');
+    const input = page.locator('input[name="todo-input"]');
     const counter = page.locator('[data-testid="todo-count"]');
 
     // Add first todo
@@ -209,7 +209,7 @@ test.describe("Todo App - Todo Counter", () => {
   test("should update counter when marking items as complete", async ({
     page,
   }) => {
-    const input = page.locator('input[placeholder="What needs to be done?"]');
+    const input = page.locator('input[name="todo-input"]');
     const counter = page.locator('[data-testid="todo-count"]');
 
     // Add three todos
@@ -251,7 +251,7 @@ test.describe("Todo App - Clear Completed", () => {
   test('should click "Clear Completed" button to remove completed items', async ({
     page,
   }) => {
-    const input = page.locator('input[placeholder="What needs to be done?"]');
+    const input = page.locator('input[name="todo-input"]');
 
     // Add three todos
     await input.fill("Todo 1");
@@ -297,7 +297,7 @@ test.describe("Todo App - Clear Completed", () => {
     await expect(clearButton).not.toBeVisible();
 
     // Add a todo
-    const input = page.locator('input[placeholder="What needs to be done?"]');
+    const input = page.locator('input[name="todo-input"]');
     await input.fill("New todo");
     await input.press("Enter");
     await page.waitForTimeout(200);
@@ -327,7 +327,7 @@ test.describe("Todo App - Clear Completed", () => {
   test('should show "Clear Completed" button only when there are completed items', async ({
     page,
   }) => {
-    const input = page.locator('input[placeholder="What needs to be done?"]');
+    const input = page.locator('input[name="todo-input"]');
     const clearButton = page.locator("button", { hasText: "Clear completed" });
 
     // Add two todos

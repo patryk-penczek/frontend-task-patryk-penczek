@@ -12,9 +12,10 @@ const Input = ({ handleSubmit, inputValue, setInputValue }: InputProps) => {
     >
       <div className="relative">
         <input
-          placeholder="Example"
+          name="todo-input"
+          placeholder="Buy groceries..."
           type="text"
-          maxLength={40}
+          maxLength={100}
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           className="block w-full rounded-xl border-0 py-4 px-5 text-gray-900 shadow-sm ring-2 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 transition-all duration-200 text-base sm:text-lg"
